@@ -44,7 +44,7 @@ class Solution {
         int n=matrix.length;
         int m=matrix[0].length;
         while(low<=high){
-            int mid=(low+high)>>1;
+            int mid=low+(high-low)/2;
             int cnt=0;
             for(int i=0;i<n;i++){
                 cnt+=countSmallerThanMid(matrix[i],mid);
