@@ -55,7 +55,7 @@ class Solution
         }
         int result[]=new int[maxi+1];
         Arrays.fill(result,-1);
-        result[0]=0;
+        // result[0]=0;
         int countJobs=0;
         int profit=0;
         for(int i=0;i<n;i++){
