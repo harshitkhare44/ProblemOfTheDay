@@ -44,45 +44,32 @@ class GfG {
 
 class Solution
 {
+    class jobComparator implements Comparator<Job>{
+        public int compare(Job j1,Job j2){
+            return j2.profit-j1.profit;
+        }
+    }
     //Function to find the maximum profit and the number of jobs done.
     int[] JobScheduling(Job arr[], int n)
     {
         // Your code here
-        Arrays.sort(arr,(a,b)->b.profit-a.profit);
-        int maxi=0;
+        Arrays.sort(arr,new jobComparator());
+        int res=0;
+        int tot_jobs=0;
+        boolean slot[]=new boolean[n];
         for(int i=0;i<n;i++){
-            maxi=Math.max(arr[i].deadline,maxi);
-        }
-        int result[]=new int[maxi+1];
-        Arrays.fill(result,-1);
-        // result[0]=0;
-        int countJobs=0;
-        int profit=0;
-        for(int i=0;i<n;i++){
-            for(int j=arr[i].deadline;j>0;j--){
-                if(result[j]==-1){
-                    result[j]=i;
-                    countJobs++;
-                    profit+=arr[i].profit;
+            for(int j=arr[i].deadline-1;j>=0;j--){
+                if(slot[j]==false){
+                    res+=arr[i].profit;
+                    tot_jobs++;
+                    slot[j]=true;
                     break;
                 }
             }
         }
         int ans[]=new int[2];
-        ans[0]=countJobs;
-        ans[1]=profit;
+        ans[0]=tot_jobs;
+        ans[1]=res;
         return ans;
-        
     }
 }
-
-/*
-class Job {
-    int id, profit, deadline;
-    Job(int x, int y, int z){
-        this.id = x;
-        this.deadline = y;
-        this.profit = z; 
-    }
-}
-*/
