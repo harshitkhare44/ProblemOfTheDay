@@ -127,20 +127,17 @@ class Tree
     {
       // Your code here
       ArrayList<Integer>ans=new ArrayList<>();
-     Map<Integer,Node>map=new HashMap<>();
-     printLeftView(root,map,0);
-     for(Map.Entry<Integer,Node>entry:map.entrySet()){
-         ans.add(entry.getValue().data);
-     }
-     return ans;
-      
+      ArrayList<Node>list=new ArrayList<>();
+      solve(root,list,0);
+      for(Node i:list){
+          ans.add(i.data);
+      }
+      return ans;
     }
-    void printLeftView(Node root,Map<Integer,Node>map,int level){
+    void solve(Node root,ArrayList<Node>list,int level){
         if(root==null)return ;
-        if(map.get(level)==null){
-            map.put(level,root);
-        }
-        printLeftView(root.left,map,level+1);
-        printLeftView(root.right,map,level+1);
+        if(level==list.size())list.add(root);
+        solve(root.left,list,level+1);
+        solve(root.right,list,level+1);
     }
 }
