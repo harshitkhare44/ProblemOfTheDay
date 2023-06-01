@@ -64,27 +64,35 @@ class Solution
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
     {
         // add your code here
-        Stack<Integer>st=new Stack<>();
+        int inDeg[]=new int[V];
+        for(List<Integer>list:adj){
+            for(int e:list){
+                inDeg[e]++;
+            }
+        }
         boolean vis[]=new boolean[V];
-        for(int i=0;i<V;i++){
-            if(!vis[i]){
-                dfs(st,i,adj,vis);
-            }
+        ArrayList<Integer>ans=new ArrayList<>();
+        bfs(adj,V,0,vis,ans,inDeg);
+        int ansList[]=new int[ans.size()];
+        int j=0;
+        for(int i:ans){
+            ansList[j++]=i;
         }
-        int ans[]=new int[V];
-        int i=0;
-        while(!st.isEmpty()){
-            ans[i++]=st.pop();
-        }
-        return ans;
+        return ansList;
     }
-    static void dfs(Stack<Integer>st,int v,ArrayList<ArrayList<Integer>>adj,boolean vis[]){
-        vis[v]=true;
-        for(int neighbour:adj.get(v)){
-            if(!vis[neighbour]){
-                dfs(st,neighbour,adj,vis);
+    static void bfs(ArrayList<ArrayList<Integer>>adj,int V,int v,boolean[]vis,ArrayList<Integer>ans,int[]indeg){
+        Queue<Integer>q=new LinkedList<>();
+        for(int i=0;i<V;i++){
+            if(indeg[i]==0)q.add(i);
+        }
+        while(!q.isEmpty()){
+            int cur=q.poll();
+            ans.add(cur);
+            for(int neighbour:adj.get(cur)){
+                if(--indeg[neighbour]==0){
+                    q.add(neighbour);
+                }
             }
         }
-        st.push(v);
     }
 }
