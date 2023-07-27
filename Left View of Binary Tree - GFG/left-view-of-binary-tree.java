@@ -127,17 +127,15 @@ class Tree
     {
       // Your code here
       ArrayList<Integer>ans=new ArrayList<>();
-      ArrayList<Node>list=new ArrayList<>();
-      solve(root,list,0);
-      for(Node i:list){
-          ans.add(i.data);
-      }
+      solve(root,ans,0);
       return ans;
     }
-    void solve(Node root,ArrayList<Node>list,int level){
-        if(root==null)return ;
-        if(level==list.size())list.add(root);
-        solve(root.left,list,level+1);
-        solve(root.right,list,level+1);
+    void solve(Node root,ArrayList<Integer>ans,int level){
+        if(root==null)return;
+        if(ans.size()==level){
+            ans.add(root.data);
+        }
+        solve(root.left,ans,level+1);
+        solve(root.right,ans,level+1);
     }
 }
