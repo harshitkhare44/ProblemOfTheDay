@@ -119,35 +119,34 @@ class GfG {
 
 class Solution
 {
+    //Function to return a list containing the bottom view of the given tree.
     class Pair{
-        int hd;
         Node node;
+        int hd;
         public Pair(int hd,Node node){
-            this.hd=hd;
             this.node=node;
+            this.hd=hd;
         }
     }
-    //Function to return a list containing the bottom view of the given tree.
     public ArrayList <Integer> bottomView(Node root)
     {
         // Code here
         ArrayList<Integer>ans=new ArrayList<>();
         Queue<Pair>q=new ArrayDeque<>();
-        Map<Integer,Node>map=new TreeMap<>();
         q.add(new Pair(0,root));
+        Map<Integer,Integer>map=new TreeMap<>();
         while(!q.isEmpty()){
             Pair cur=q.remove();
-            
-                map.put(cur.hd,cur.node);
-                if(cur.node.left!=null){
+            map.put(cur.hd,cur.node.data);
+            if(cur.node.left!=null){
                 q.add(new Pair(cur.hd-1,cur.node.left));
             }
             if(cur.node.right!=null){
                 q.add(new Pair(cur.hd+1,cur.node.right));
             }
         }
-        for(Map.Entry<Integer,Node>entry:map.entrySet()){
-            ans.add(entry.getValue().data);
+        for(Map.Entry<Integer,Integer>entry:map.entrySet()){
+            ans.add(entry.getValue());
         }
         return ans;
     }
