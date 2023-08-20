@@ -124,10 +124,10 @@ class Solution
     static ArrayList <Integer> verticalOrder(Node root)
     {
         // add your code here
+        Map<Integer,ArrayList<Integer>>map=new TreeMap<>();
         ArrayList<Integer>ans=new ArrayList<>();
         Queue<Pair>q=new ArrayDeque<>();
-        Map<Integer,List<Integer>>map=new TreeMap<>();
-        q.add(new Pair(0,root));
+       q.add(new Pair(0,root));
         while(!q.isEmpty()){
             Pair cur=q.remove();
             if(map.containsKey(cur.hd)){
@@ -136,7 +136,7 @@ class Solution
             else{
                 ArrayList<Integer>arr=new ArrayList<>();
                 arr.add(cur.node.data);
-                map.put(cur.hd,arr);
+                map.put(cur.hd,new ArrayList<>(arr));
             }
             if(cur.node.left!=null){
                 q.add(new Pair(cur.hd-1,cur.node.left));
@@ -145,7 +145,7 @@ class Solution
                 q.add(new Pair(cur.hd+1,cur.node.right));
             }
         }
-        for(Map.Entry<Integer,List<Integer>>entry:map.entrySet()){
+        for(Map.Entry<Integer,ArrayList<Integer>>entry:map.entrySet()){
             ans.addAll(entry.getValue());
         }
         return ans;
