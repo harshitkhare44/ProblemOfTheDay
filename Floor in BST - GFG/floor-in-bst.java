@@ -71,7 +71,7 @@ class Solution {
            else if(root.data>x){
                 root=root.left;
             }
-            else{
+            else if(root.data<x){
                 ans=root.data;
                 root=root.right;
             }
