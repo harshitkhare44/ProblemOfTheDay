@@ -68,10 +68,10 @@ class Solution {
             if(root.data==x){
                 return x;
             }
-           else if(root.data>x){
+         if(root.data>x){
                 root=root.left;
             }
-            else if(root.data<x){
+          else if(root.data<x){
                 ans=root.data;
                 root=root.right;
             }
