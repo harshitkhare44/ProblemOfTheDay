@@ -121,16 +121,15 @@ class Solution
     {
         //Your code here
         if(root==null)return -1;
-       
-        List<Integer>arr=new ArrayList<>();
-        inorder(root,arr);
-        Collections.sort(arr,Collections.reverseOrder());
-        return arr.get(K-1);
+        Node ans=find(root,new int[]{K});
+        return ans.data;
     }
-    void inorder(Node root,List<Integer>arr){
-        if(root==null)return;
-        inorder(root.left,arr);
-        arr.add(root.data);
-        inorder(root.right,arr);
+    Node find(Node root,int[]k){
+        if(root==null)return null;
+        Node right=find(root.right,k);
+        if(right!=null)return right;
+        k[0]--;
+        if(k[0]==0)return root;
+        return find(root.left,k);
     }
 }
