@@ -26,24 +26,30 @@ class GfG
 
 class Solution
 {
+    int dp[][];
     public int longestPalinSubseq(String S)
     {
         //code here
-        StringBuilder sb=new StringBuilder(S);
-        int n=S.length();
-        int dp[][]=new int[n][n];
+        StringBuilder sb=new StringBuilder();
+        sb.append(S);
+        return lcs(S,sb.reverse().toString());
+    }
+    int lcs(String s1,String s2){
+        int n=s1.length();
+        int m=s2.length();
+        dp=new int[n][m];
         for(int row[]:dp){
             Arrays.fill(row,-1);
         }
-        sb.reverse();
-        return solve(n-1,n-1,S,sb.toString(),dp);
+        return solve(s1,s2,n-1,m-1);
+        
     }
-    int solve(int i,int j,String s,String t,int[][]dp){
-        if(i<0 || j<0 )return 0;
+    int solve(String s1,String s2,int i,int j){
+        if(i<0 || j<0)return 0;
         if(dp[i][j]!=-1)return dp[i][j];
-        if(s.charAt(i)==t.charAt(j)){
-            return dp[i][j]=1+solve(i-1,j-1,s,t,dp);
+        if(s1.charAt(i)==s2.charAt(j)){
+            return dp[i][j]=1+solve(s1,s2,i-1,j-1);
         }
-        return dp[i][j]=Math.max(solve(i,j-1,s,t,dp),solve(i-1,j,s,t,dp));
+        return dp[i][j]=Math.max(solve(s1,s2,i,j-1),solve(s1,s2,i-1,j));
     }
 }
