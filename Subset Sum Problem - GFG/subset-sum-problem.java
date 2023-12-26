@@ -38,21 +38,22 @@ class Solution{
 
     static Boolean isSubsetSum(int N, int arr[], int sum){
         // code here
-      boolean dp[][]=new boolean[N+1][10001];
-      for(int i=0;i<N;i++)dp[i][0]=true;
-      dp[0][arr[0]]=true;
-      for(int i=1;i<N;i++){
-          for(int j=1;j<=sum;j++){
-              boolean nk=dp[i-1][j];
-              boolean tk=false;
-              if(j>=arr[i]){
-                  tk=dp[i-1][j-arr[i]];
-              }
-              if(nk==true || tk==true)dp[i][j]=true;
-              else dp[i][j]=false;
-          }
-      }
-      return dp[N-1][sum];
+     boolean prev[]=new boolean[10001];
+     prev[0]=true;
+     prev[arr[0]]=true;
+     for(int i=1;i<N;i++){
+         boolean temp[]=new boolean[10001];
+         temp[0]=true;
+         for(int j=1;j<=sum;j++){
+             boolean nk=prev[j];
+             boolean tk=false;
+             if(arr[i]<=j)tk=prev[j-arr[i]];
+             if(nk==true || tk==true)temp[j]=true;
+             else temp[j]=false;
+         }
+         prev=temp;
+     }
+     return prev[sum];
     }
     
 }
