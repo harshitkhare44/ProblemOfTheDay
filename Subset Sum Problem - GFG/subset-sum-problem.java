@@ -38,19 +38,21 @@ class Solution{
 
     static Boolean isSubsetSum(int N, int arr[], int sum){
         // code here
-        int dp[][]=new int[N+1][sum+1];
-        for(int row[]:dp)Arrays.fill(row,-1);
-        return solve(arr,N-1,sum,dp);
+      boolean dp[][]=new boolean[N+1][10001];
+      for(int i=0;i<N;i++)dp[i][0]=true;
+      dp[0][arr[0]]=true;
+      for(int i=1;i<N;i++){
+          for(int j=1;j<=sum;j++){
+              boolean nk=dp[i-1][j];
+              boolean tk=false;
+              if(j>=arr[i]){
+                  tk=dp[i-1][j-arr[i]];
+              }
+              if(nk==true || tk==true)dp[i][j]=true;
+              else dp[i][j]=false;
+          }
+      }
+      return dp[N-1][sum];
     }
-    static boolean solve(int[]arr,int i,int sum,int[][]dp){
-        if(sum==0)return true;
-        if(i==0) return (arr[0]==sum);
-        if(dp[i][sum]!=-1)return dp[i][sum]==0?false:true;
-        boolean  nt=solve(arr,i-1,sum,dp);
-        boolean  tk=false;
-        if(sum>=arr[i])tk=solve(arr,i-1,sum-arr[i],dp);
-        if(nt==true || tk==true) dp[i][sum]=1;
-        else dp[i][sum]=0;
-        return nt|tk;
-    }
+    
 }
